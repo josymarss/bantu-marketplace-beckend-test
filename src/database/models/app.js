@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const business = {
       nameusario:'',
       description:'',
-      idusernegotiatior: mongoose.Types.ObjectId
+      idusernegotiatior: mongoose.Schema.Types.ObjectId
 };
 
 const AppSchema = mongoose.Schema({
@@ -16,7 +16,8 @@ const AppSchema = mongoose.Schema({
             default:0
       },
       iduser:{
-            type:mongoose.Types.ObjectId
+            type:mongoose.Schema.Types.ObjectId,
+            ref: 'User' 
       }
 });
 

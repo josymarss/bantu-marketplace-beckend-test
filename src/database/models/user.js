@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const userfollow = {
       name:'',
-      idfollower:mongoose.Types.ObjectId
+      idfollower:mongoose.Schema.Types.ObjectId
 }
 const UserSchema = mongoose.Schema({
       name:{type:String},
