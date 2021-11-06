@@ -6,6 +6,8 @@ const connect = async ()  => {
             result? console.log('Connected') : '';
       }catch(e){
             e ? console.log('An error') : '';
+      }finally{
+            mongoose.connection.close();
       }
 }
 

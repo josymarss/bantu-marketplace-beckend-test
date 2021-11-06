@@ -13,7 +13,7 @@ router.post('/user/create', async (req,res) =>{
       let alredyExist = await User.findOne(query);
       console.log(alredyExist);
       if(!alredyExist){
-            await User.create(user);
+            await User.create(user).save();
             return res.send(true);
       }else{
             return res.send(false);
@@ -21,7 +21,7 @@ router.post('/user/create', async (req,res) =>{
 });
 router.get('/users',async (req,res) =>{
       //retorna todos, especifico para procurar usuarios ** 
-      const users = await User.find();
+      const users = await User.find({});
       res.send(users);
 });
 router.get('/user/:id', async(req,res) =>{
@@ -44,7 +44,7 @@ router.put('/user/follow/:id', async (req,res)=>{
 router.post('/app/create', async (req,res)=> {
       //Inserir apps com o id do usuario(relacao 1 para m)
       const appToCreate = req.body;
-      const appCreated = await App.create(appToCreate);
+      const appCreated = await App.create(appToCreate).save();
       res.send(appCreated);
 });
 
