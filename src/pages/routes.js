@@ -4,7 +4,7 @@ const router = express.Router();
 
 const User = require('../database/models/user');
 const App = require('../database/models/app');
-
+const Follwer = require('../database/models/followers');
 // ** section user ** //
 router.post('/user/create', async (req,res) =>{
       //criar usuario no banco de dados ** 
@@ -31,15 +31,17 @@ router.get('/user/:id', async(req,res) =>{
 });
 router.put('/user/follow/:id', async (req,res)=>{
       //Seguir um usuario **
-      //Meu id vem do localstorage 
-      const myId = '';
-      const userResult = await User.findOne({_id:myId},{name:1,_id:1});//buscar meu nome
-      const user = await User.updateOne({_id:req.params.id},
-            { $push: { followers: userResult } }
-      );//ir na pessoa que quero seguir e adicionar meu nome
-
-      res.send(user);
-})
+      const myId = '';//Meu id vem do localstorage
+      const userResult = await Follwer.findOne({_id: req.params.id, following:myId});//buscar meu meu id na pessoa que euro seguir
+      if(!userResult){
+            await Follwer.updateOne(
+                  {_id:req.params.id},
+                  { $push: { following: myId } }
+            );//ir na pessoa que quero seguir e adicionar meu nome
+            return res.send(true);
+      }
+      res.send(false); 
+});
 // ** setion app ** //
 router.post('/app/create', async (req,res)=> {
       //Inserir apps com o id do usuario(relacao 1 para m)
